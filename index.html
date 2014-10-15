@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>.gitignore combinator</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style type="text/css">
+			h1 {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>.gitignore combinator</h1>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="ui-widget">
+						<label for="ignore1">.gitignore #1</label>		
+						<input id="ignore1" />
+					</div>
+					<div class="ui-widget">
+						<label for="ignore2">.gitignore #2</label>		
+						<input id="ignore2" />
+					</div>
+					<div class="ui-widget">
+						<label for="ignore3">.gitignore #3</label>		
+						<input id="ignore3" />
+					</div>
+					<div class="ui-widget">
+						<label for="ignore4">.gitignore #4</label>		
+						<input id="ignore4" />
+					</div>
+					<div class="ui-widget">
+						<label for="ignore5">.gitignore #5</label>		
+						<input id="ignore5" />
+					</div>
+					<a href="#" id="combine" class="btn btn-default" role="button">Combine!</a>
+				</div>
+				<div class="col-md-8">
+					<textarea id="result" rows="50" cols="80" readonly></textarea>
+				</div>
+			</div>
+		<p>This website is created by <a href="http://github.com/laufi">laufi</a>. This website uses <a href="http://jquery.com">jQuery</a>,<a href="jqueryui.com">jQuery UI</a> and <a href="getbootstrap.com">Bootstrap</a>. The .gitignores on this Website are the official Github <a href="http://github.com/github/gitignore">gitignore</a>, version d9cc01e935. This website is available under the <a href="LICENSE.txt">MIT-License</a>. <a href="http://github.com/laufi/gitignorecombinator">Fork me on Github</a></p>
+		</div>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+		<script type="text/javascript">
+			var items = [];
+			$("document").ready(function(){
+				$.getJSON("files.json", function (data) {
+				items = data;
+				loaded();
+				});
+			});
+			function loaded(){
+				$("#ignore1").autocomplete({
+					source: items
+				});
+				$("#ignore2").autocomplete({
+					source: items
+				});
+				$("#ignore3").autocomplete({
+					source: items
+				});
+				$("#ignore4").autocomplete({
+					source: items
+				});
+				$("#ignore5").autocomplete({
+					source: items
+				});
+				$("#combine").click(function() {
+					var ignore1 = $("#ignore1").val();
+					var ignore2 = $("#ignore2").val();
+					var ignore3 = $("#ignore3").val();
+					var ignore4 = $("#ignore4").val();
+					var ignore5 = $("#ignore5").val();
+					$("#result").html("");
+					$.get("gitignore/" + ignore1 + ".gitignore", function(data){
+						$("#result").append("\n # "+ ignore1 + "\n \n");
+						$("#result").append(data);
+					});
+					$.get("gitignore/" + ignore2 + ".gitignore", function(data){
+						$("#result").append("\n # "+ ignore2 + "\n \n");
+						$("#result").append(data);
+					});
+					$.get("gitignore/" + ignore3 + ".gitignore", function(data){
+						$("#result").append("\n # "+ ignore3 + "\n \n");
+						$("#result").append(data);
+					});
+					$.get("gitignore/" + ignore4 + ".gitignore", function(data){
+						$("#result").append("\n # "+ ignore4 + "\n \n");
+						$("#result").append(data);
+					});
+					$.get("gitignore/" + ignore5 + ".gitignore", function(data){
+						$("#result").append("\n # "+ ignore5 + "\n \n");
+						$("#result").append(data);
+					});
+				});	
+			}
+		</script>
+	</body>
+</html>
